@@ -27,6 +27,7 @@ public class SimpleLoginResponse {
         private Long userId;
         private String username;
         private String email;
+        private Boolean isAdmin;
     }
     
     public static SimpleLoginResponse success(UserData userData) {

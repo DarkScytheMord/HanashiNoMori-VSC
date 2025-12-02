@@ -27,6 +27,7 @@ public class SimpleRegisterResponse {
         private Long userId;
         private String username;
         private String email;
+        private Boolean isAdmin;
     }
     
     public static SimpleRegisterResponse success(UserData userData) {

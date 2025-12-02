@@ -87,6 +87,7 @@ public class AndroidAuthController {
                     .userId(user.getId())
                     .username(user.getUsername())
                     .email(user.getEmail())
+                    .isAdmin(user.getIsAdmin() != null ? user.getIsAdmin() : false)
                     .build();
 
             SimpleRegisterResponse response = SimpleRegisterResponse.success(userData);
@@ -162,6 +163,7 @@ public class AndroidAuthController {
                 .userId(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
+                .isAdmin(user.getIsAdmin() != null ? user.getIsAdmin() : false)
                 .build();
 
             SimpleLoginResponse response = SimpleLoginResponse.builder()
@@ -194,5 +196,15 @@ public class AndroidAuthController {
     @GetMapping("/ping")
     public ResponseEntity<String> ping() {
         return ResponseEntity.ok("Backend Android MVP funcionando correctamente ✅");
+    }
+    
+    /**
+     * Endpoint temporal para generar hash BCrypt (SOLO DESARROLLO)
+     * GET /api/auth/hash?password=admin123
+     */
+    @GetMapping("/hash")
+    public ResponseEntity<String> generateHash(@RequestParam String password) {
+        String hash = passwordEncoder.encode(password);
+        return ResponseEntity.ok("Password: " + password + "\nHash BCrypt: " + hash);
     }
 }

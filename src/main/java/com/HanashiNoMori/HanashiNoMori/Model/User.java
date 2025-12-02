@@ -56,6 +56,10 @@ public class User {
     @Builder.Default
     private Boolean emailVerified = false;
 
+    @Column(name = "is_admin")
+    @Builder.Default
+    private Boolean isAdmin = false;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_roles",
