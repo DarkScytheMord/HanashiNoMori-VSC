@@ -31,7 +31,7 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "media_id", nullable = false)
-    private Media media;
+    private Book media;
 
     @Column(nullable = false)
     private Integer rating;

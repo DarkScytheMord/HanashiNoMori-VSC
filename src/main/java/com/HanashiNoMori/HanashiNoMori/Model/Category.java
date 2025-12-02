@@ -39,10 +39,6 @@ public class Category {
     @Builder.Default
     private Integer displayOrder = 0;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @Builder.Default
-    private Set<Media> mediaList = new HashSet<>();
-
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

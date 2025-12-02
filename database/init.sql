@@ -269,5 +269,83 @@ CREATE TABLE IF NOT EXISTS activity_log (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ================================================
+-- ACTUALIZACIÓN PARA ANDROID APP
+-- ================================================
+
+-- Renombrar tablas existentes
+RENAME TABLE media TO books;
+RENAME TABLE user_library TO favorites;
+
+-- Agregar constraint único en favorites
+ALTER TABLE favorites 
+ADD UNIQUE KEY unique_user_book (user_id, book_id);
+
+-- ================================================
+-- TABLA: authors
+-- ================================================
+CREATE TABLE IF NOT EXISTS authors (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    bio TEXT,
+    photo_url VARCHAR(500),
+    country VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ================================================
+-- TABLA: publishers
+-- ================================================
+CREATE TABLE IF NOT EXISTS publishers (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    country VARCHAR(50),
+    website VARCHAR(200),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ================================================
+-- TABLA: book_authors (Relación muchos a muchos)
+-- ================================================
+CREATE TABLE IF NOT EXISTS book_authors (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    book_id BIGINT NOT NULL,
+    author_id BIGINT NOT NULL,
+    role VARCHAR(50),
+    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE,
+    FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_book_author (book_id, author_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ================================================
+-- TABLA: user_preferences
+-- ================================================
+CREATE TABLE IF NOT EXISTS user_preferences (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL UNIQUE,
+    theme VARCHAR(20) DEFAULT 'light',
+    notifications_enabled BOOLEAN DEFAULT TRUE,
+    favorite_category VARCHAR(50),
+    language VARCHAR(10) DEFAULT 'es',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ================================================
+-- DATOS DE PRUEBA: Libros
+-- ================================================
+INSERT INTO books (title, author, category, description) VALUES
+('Naruto', 'Masashi Kishimoto', 'Manga', 'Historia de un ninja que busca ser Hokage'),
+('One Piece', 'Eiichiro Oda', 'Manga', 'Piratas en busca del tesoro One Piece'),
+('Attack on Titan', 'Hajime Isayama', 'Manga', 'Humanidad vs Titanes'),
+('Death Note', 'Tsugumi Ohba', 'Manga', 'Cuaderno de la muerte'),
+('Solo Leveling', 'Chugong', 'Manhwa', 'Cazador de monstruos que sube de nivel'),
+('Tower of God', 'SIU', 'Manhwa', 'Escalando la torre misteriosa'),
+('The Beginning After The End', 'TurtleMe', 'Manhwa', 'Rey reencarnado en un mundo mágico'),
+('Link Click', 'Studio Lan', 'Donghua', 'Viajes en el tiempo a través de fotografías'),
+('The King''s Avatar', 'Butterfly Blue', 'Donghua', 'Jugador profesional de eSports'),
+('Mo Dao Zu Shi', 'Mo Xiang Tong Xiu', 'Donghua', 'Cultivador reencarnado');
+
+-- ================================================
 -- FIN DEL SCRIPT
 -- ================================================

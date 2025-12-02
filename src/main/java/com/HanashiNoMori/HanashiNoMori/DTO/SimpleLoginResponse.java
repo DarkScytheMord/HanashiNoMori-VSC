@@ -1,28 +1,47 @@
 package com.HanashiNoMori.HanashiNoMori.DTO;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * Respuesta simplificada para login - Compatible con app Android MVP
- * Devuelve: success, message, userId, username
+ * Devuelve: success, message, data { userId, username, email }
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class SimpleLoginResponse {
     
     private Boolean success;
     private String message;
-    private Integer userId;
-    private String username;
+    private UserData data;
     
-    public static SimpleLoginResponse success(Integer userId, String username) {
-        return new SimpleLoginResponse(true, "Login exitoso", userId, username);
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserData {
+        private Long userId;
+        private String username;
+        private String email;
+    }
+    
+    public static SimpleLoginResponse success(UserData userData) {
+        return SimpleLoginResponse.builder()
+                .success(true)
+                .message("Login exitoso")
+                .data(userData)
+                .build();
     }
     
     public static SimpleLoginResponse error(String message) {
-        return new SimpleLoginResponse(false, message, null, null);
+        return SimpleLoginResponse.builder()
+                .success(false)
+                .message(message)
+                .data(null)
+                .build();
     }
 }

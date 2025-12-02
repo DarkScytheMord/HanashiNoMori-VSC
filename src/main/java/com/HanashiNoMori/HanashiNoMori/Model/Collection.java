@@ -55,7 +55,7 @@ public class Collection {
         inverseJoinColumns = @JoinColumn(name = "media_id")
     )
     @Builder.Default
-    private Set<Media> mediaItems = new HashSet<>();
+    private Set<Book> mediaItems = new HashSet<>();
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

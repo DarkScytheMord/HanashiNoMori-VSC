@@ -1,40 +1,50 @@
 package com.HanashiNoMori.HanashiNoMori.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "tags")
+@Table(name = "books")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tag {
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 50)
-    private String name;
+    @Column(nullable = false)
+    private String title;
 
-    @Column(name = "color_hex", length = 7)
-    @Builder.Default
-    private String colorHex = "#808080";
+    @Column(nullable = false)
+    private String author;
 
-    @Column(length = 50)
+    @Column(nullable = false)
     private String category;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "cover_url", length = 500)
+    private String coverUrl;
+
+    @Column(length = 13)
+    private String isbn;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

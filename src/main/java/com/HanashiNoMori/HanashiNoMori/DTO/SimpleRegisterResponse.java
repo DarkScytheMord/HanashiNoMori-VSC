@@ -1,27 +1,47 @@
 package com.HanashiNoMori.HanashiNoMori.DTO;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * Respuesta simplificada para registro - Compatible con app Android MVP
- * Devuelve: success, message, userId
+ * Devuelve: success, message, data { userId, username, email }
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class SimpleRegisterResponse {
     
     private Boolean success;
     private String message;
-    private Integer userId;
+    private UserData data;
     
-    public static SimpleRegisterResponse success(Integer userId) {
-        return new SimpleRegisterResponse(true, "Usuario registrado exitosamente", userId);
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserData {
+        private Long userId;
+        private String username;
+        private String email;
+    }
+    
+    public static SimpleRegisterResponse success(UserData userData) {
+        return SimpleRegisterResponse.builder()
+                .success(true)
+                .message("Usuario registrado exitosamente")
+                .data(userData)
+                .build();
     }
     
     public static SimpleRegisterResponse error(String message) {
-        return new SimpleRegisterResponse(false, message, null);
+        return SimpleRegisterResponse.builder()
+                .success(false)
+                .message(message)
+                .data(null)
+                .build();
     }
 }

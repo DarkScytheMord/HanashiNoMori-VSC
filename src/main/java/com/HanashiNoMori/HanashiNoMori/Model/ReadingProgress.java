@@ -31,7 +31,7 @@ public class ReadingProgress {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "media_id", nullable = false)
-    private Media media;
+    private Book media;
 
     @Column(name = "current_chapter")
     @Builder.Default

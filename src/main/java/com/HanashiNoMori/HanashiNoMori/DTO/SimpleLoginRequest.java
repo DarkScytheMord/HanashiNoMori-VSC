@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 
 /**
  * DTO simplificado para login - Compatible con app Android MVP
- * Solo requiere: username, password
+ * Solo requiere: usernameOrEmail, password
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class SimpleLoginRequest {
     
-    @NotBlank(message = "El username es obligatorio")
-    private String username;
+    @NotBlank(message = "El username o email es obligatorio")
+    private String usernameOrEmail;
     
     @NotBlank(message = "El password es obligatorio")
     private String password;

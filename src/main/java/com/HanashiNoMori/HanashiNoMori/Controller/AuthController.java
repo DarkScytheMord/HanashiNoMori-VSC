@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * Sin Spring Security para facilitar proyectos universitarios
  */
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/auth-jwt")  // ← Cambiado para evitar conflicto con AndroidAuthController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
 
